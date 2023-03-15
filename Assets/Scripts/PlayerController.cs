@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance; 
     public float moveSpeed;
     private Rigidbody2D _rigidbody2D;
     private Vector2 _moveDirection;
     private Vector2 _mousePosition;
     private Animator _animator;
-    public Weapon weapon;
-    
+    public WeaponSystem weapons;
+    public bool cantMove;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,21 +29,27 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _moveDirection.x = Input.GetAxisRaw("Horizontal");
-        _moveDirection.y = Input.GetAxisRaw("Vertical");
-        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _moveDirection.Normalize();
-
-        if (Input.GetButton("Fire1"))
+        if (!cantMove)
         {
-            Shoot();
+            _moveDirection.x = Input.GetAxisRaw("Horizontal");
+            _moveDirection.y = Input.GetAxisRaw("Vertical");
+            _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _moveDirection.Normalize();
+
+            if (Input.GetButton("Fire1"))
+            {
+                Shoot();
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        RotateToMousePosition();
-        Move(); 
+        if (!cantMove)
+        {
+            RotateToMousePosition();
+            Move(); 
+        }
     }
 
     public void RotateToMousePosition()
@@ -60,6 +73,13 @@ public class PlayerController : MonoBehaviour
 
     public void Shoot()
     {
-        weapon.Shoot();
+        weapons.usedWeapon.Shoot();
+        weapons.UpdateWeaponUI();
+    }
+
+    public void Died()
+    {
+        _animator.SetBool("isDead", true);
+        cantMove = true;
     }
 }

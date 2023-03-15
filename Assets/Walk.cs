@@ -18,7 +18,7 @@ public class Walk : StateMachineBehaviour
         animator.transform.position = Vector2.MoveTowards(animator.transform.position, _target.position, speed * Time.deltaTime);
         float distance = Vector2.Distance(animator.transform.position, _target.position);
         
-        if (distance > 15f)
+        if (distance > 15)
         {
             animator.SetBool("Chasing", false);
         }
@@ -26,7 +26,7 @@ public class Walk : StateMachineBehaviour
         Vector2 lookDirection = _target.transform.position - animator.transform.position;
         animator.transform.up = new Vector2(lookDirection.x, lookDirection.y);
 
-        if (distance < 1.5f)
+        if (distance < 2)
         {
             animator.SetTrigger("Attack");
         }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,8 +6,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth;
     public float currentHealth;
-
     public Image fill;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +25,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damageAmount;
         UpdateHealthBar();  
         
-        //если хп врага меньше или равно нулю, то вызывается функция Died.
+        //Если хп врага меньше или равно нулю, то вызывается функция Died.
         if (currentHealth <= 0)
         {
-            //Died();
+            PlayerController.Instance.Died();//Активация анимации смерти игрока.
         }
     }
 
@@ -39,10 +40,5 @@ public class PlayerHealth : MonoBehaviour
         {
             fill.fillAmount = 0;
         }
-    }
-    
-    public void Died()
-    {
-        Destroy(gameObject);
     }
 }

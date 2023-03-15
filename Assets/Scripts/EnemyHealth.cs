@@ -5,12 +5,14 @@ public class EnemyHealth : MonoBehaviour
 {
     public float maxHealth;
     public float currentHealth;
-
     public Image fill;
+    private Animator _animator;
+    
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -43,6 +45,7 @@ public class EnemyHealth : MonoBehaviour
     
     public void Died()
     {
-        Destroy(gameObject);
+        _animator.SetBool("isDead", true);
+        Destroy(gameObject, 5);
     }
 }

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 64561924232496775}
   - component: {fileID: 64561924232496774}
   m_Layer: 0
-  m_Name: Weapon area
+  m_Name: Weapon Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,10 +77,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79afdb3c2e1c4c4890dcab211a7b462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotsPerSecond: 2
   bullet: {fileID: 8629262188968342306, guid: 7635cc3c66a3cce4bac16c8da9ae4888, type: 3}
-  firePoint: {fileID: 64561923814816633}
-  damage: 1
+  firePoints:
+  - {fileID: 64561923814816633}
+  shotsPerSecond: 4
+  damage: 3
+  ammo: 100
+  weaponIcon: {fileID: 21300000, guid: ce54aa46dfce672418b00abeff4e1903, type: 3}
 --- !u!1 &64561924252795431
 GameObject:
   m_ObjectHideFlags: 0

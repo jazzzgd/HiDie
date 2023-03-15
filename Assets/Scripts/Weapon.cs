@@ -1,22 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
     private float _nextShotTime;
-    public float shotsPerSecond;
     public Bullet bullet;
-    public Transform firePoint;
+    public Transform[] firePoints;
+    public float shotsPerSecond;
     public float damage;
+    public int ammo;
+    public Sprite weaponIcon;
 
     public void Shoot()
     {
-        if (_nextShotTime <= Time.time)
+        if (_nextShotTime <= Time.time && ammo > 0)
         {
-            Bullet bulletShot = Instantiate(bullet, firePoint.position, firePoint.rotation);
-            bulletShot.damage = damage;
+            foreach (Transform firePoint in firePoints)
+            {
+                Bullet bulletShot = Instantiate(bullet, firePoint.position, firePoint.rotation);
+                bulletShot.damage = damage;
+            }
+            
             _nextShotTime = Time.time + (1 / shotsPerSecond);
+            ammo--;
         }
     }
 

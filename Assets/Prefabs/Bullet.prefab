@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8629262188478976155}
   - component: {fileID: 8629262188478976154}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8629262188968342305}
   - component: {fileID: 8629262188968342306}
   - component: {fileID: 9189424050632574584}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  speed: 10
+  speed: 20
 --- !u!70 &9189424050632574584
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

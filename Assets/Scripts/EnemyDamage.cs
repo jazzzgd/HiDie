@@ -11,8 +11,8 @@ public class EnemyDamage : MonoBehaviour
     {
         if (col.gameObject.GetComponent<PlayerHealth>() != null)
         {
-            PlayerHealth _playerHealth = col.gameObject.GetComponent<PlayerHealth>();
-            _playerHealth.GetDamage(damage);
+            PlayerHealth playerHealth = col.gameObject.GetComponent<PlayerHealth>();
+            playerHealth.GetDamage(damage);
         }
     }
 }
