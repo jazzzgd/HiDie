@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     public WeaponSystem weapons;
     public bool cantMove;
+    public float gameOverDelay;
+    public float timeToSpawn;
 
     private void Awake()
     {
@@ -59,7 +60,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Move()
-    { 
+    {
+        _animator.SetBool("PistolAnim", false);
+        _animator.SetBool("RifleAnim", false);
+        _animator.SetBool("ShotgunAnim", false);
         if (_moveDirection != Vector2.zero)
         {
             _animator.SetBool("Move", true);
@@ -81,5 +85,19 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetBool("isDead", true);
         cantMove = true;
+        GameOver();
+        AudioManager.instance.PlaySFX(3);
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    public IEnumerator GameOverCoroutine()
+    {
+        yield return new WaitForSeconds(gameOverDelay);
+        yield return new WaitForSeconds(timeToSpawn);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

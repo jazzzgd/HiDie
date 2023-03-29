@@ -5,7 +5,7 @@ using UnityEngine;
 public class Walk : StateMachineBehaviour
 {
     private Transform _target;
-    public float speed = 1.5f;
+    public float speed = 4f;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -18,7 +18,7 @@ public class Walk : StateMachineBehaviour
         animator.transform.position = Vector2.MoveTowards(animator.transform.position, _target.position, speed * Time.deltaTime);
         float distance = Vector2.Distance(animator.transform.position, _target.position);
         
-        if (distance > 15)
+        if (distance > 50)
         {
             animator.SetBool("Chasing", false);
         }

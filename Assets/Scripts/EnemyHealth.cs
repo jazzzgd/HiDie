@@ -7,29 +7,27 @@ public class EnemyHealth : MonoBehaviour
     public float currentHealth;
     public Image fill;
     private Animator _animator;
+    public int moneyEarn;
+    public GameObject zombieBlood;
     
-    // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void GetDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        UpdateHealthBar();  
-        
+        UpdateHealthBar();
+        GameObject obj = Instantiate(zombieBlood, transform.position, transform.rotation);
+        Destroy(obj, 2f);
         //если хп врага меньше или равно нулю, то вызывается функция Died.
         if (currentHealth <= 0)
         {
             Died();
+            GameManager.Instance.money += moneyEarn;
+            SaveManager.instance.activeSave.currentMoney = GameManager.Instance.money;
         }
     }
 
@@ -46,6 +44,8 @@ public class EnemyHealth : MonoBehaviour
     public void Died()
     {
         _animator.SetBool("isDead", true);
-        Destroy(gameObject, 5);
+        GetComponent<Collider2D>().enabled = false;
+        Destroy(gameObject, 10);
+        AudioManager.instance.PlaySFX(1);
     }
 }

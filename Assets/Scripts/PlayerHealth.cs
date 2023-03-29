@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public float maxHealth;
+    public float maxHealth = 100f;
     public float currentHealth;
     public Image fill;
 
@@ -19,12 +19,25 @@ public class PlayerHealth : MonoBehaviour
     {
         
     }
+    
+    public void RestoreHealth(float healAmount)
+    {
+        currentHealth += healAmount; // Increase the player's health by the specified amount
+        UpdateHealthBar();
+        // Clamp the player's health to the maximum
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
 
+        Debug.Log("Player restored " + healAmount + " health. Current health: " + currentHealth);
+    }
+    
     public void GetDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        UpdateHealthBar();  
-        
+        UpdateHealthBar();
+        AudioManager.instance.PlaySFX(4);
         //Если хп врага меньше или равно нулю, то вызывается функция Died.
         if (currentHealth <= 0)
         {

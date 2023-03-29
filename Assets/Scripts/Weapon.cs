@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -9,9 +11,30 @@ public class Weapon : MonoBehaviour
     public float damage;
     public int ammo;
     public Sprite weaponIcon;
+    public Animator fireAnim;
+
+    [Header("Audio")] 
+    private AudioSource audioSource;
+    public AudioClip shootSound;
+    [Range(0f, 1f)] public float audioVolume = 1f;
+    [Range(0f, 1f)] public float audioPitch = 1f;
+    
+    private void Start()
+    {
+        fireAnim = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        audioSource.volume = audioVolume;
+        audioSource.pitch = audioPitch;
+    }
 
     public void Shoot()
     {
+        fireAnim.SetTrigger("Fire");
+        
         if (_nextShotTime <= Time.time && ammo > 0)
         {
             foreach (Transform firePoint in firePoints)
@@ -22,18 +45,7 @@ public class Weapon : MonoBehaviour
             
             _nextShotTime = Time.time + (1 / shotsPerSecond);
             ammo--;
+            audioSource.PlayOneShot(shootSound);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

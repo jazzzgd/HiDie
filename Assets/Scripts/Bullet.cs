@@ -17,18 +17,18 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.GetComponent<EnemyHealth>() != null)
         {
             EnemyHealth enemyHealth = col.gameObject.GetComponent<EnemyHealth>();
             enemyHealth.GetDamage(damage);
+        }
+        
+        if (col.gameObject.GetComponent<BoomBarrelHealth>() != null)
+        {
+            BoomBarrelHealth barrelHealth = col.gameObject.GetComponent<BoomBarrelHealth>();
+            barrelHealth.GetDamage(damage);
         }
         
         Destroy(gameObject);

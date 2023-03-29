@@ -2,38 +2,36 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameObject shopMenu;
-    
+    public int money;
+    public TextMeshProUGUI moneyText;
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        money = SaveManager.instance.activeSave.currentMoney;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
             Shop();
         }
+        
+        UpdateMoneyText();
     }
 
     public void Shop()
@@ -46,5 +44,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         shopMenu.SetActive(false);
+    }
+
+    public void UpdateMoneyText()
+    {
+        moneyText.text = money.ToString();
     }
 }
