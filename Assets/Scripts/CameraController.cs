@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -10,6 +7,7 @@ public class CameraController : MonoBehaviour
     private float _halfHeight;
     private float _halfWidth;
 
+    // Поиск игрока на сцене, и расчёт ширины и высоты экрана.
     private void Start()
     {
         _player = FindObjectOfType<PlayerController>();
@@ -17,6 +15,8 @@ public class CameraController : MonoBehaviour
         _halfWidth = _halfHeight * Camera.main.aspect;
     }
 
+    // Проверка что игрок был найден.
+    // Фиксация позиции камеры, ограниченной рамкой карты.
     private void Update()
     {
         if (_player != null)
@@ -28,3 +28,4 @@ public class CameraController : MonoBehaviour
         }
     }
 }
+

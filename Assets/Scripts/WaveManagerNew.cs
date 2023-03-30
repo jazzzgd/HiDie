@@ -5,9 +5,13 @@ using UnityEngine;
 public class WaveManagerNew : MonoBehaviour {
 
     public GameObject[] enemies;
+    [Header("Количество врагов за одну волну")]
     public int numEnemies;
+    [Header("Время задержки между спавном каждого противника")]
     public float spawnRate;
+    [Header("Время задержки между каждой волной")]
     public float waveDelay;
+    [Header("Общее количество волн противников")]
     public int waveCount;
 
     private int currentWave;

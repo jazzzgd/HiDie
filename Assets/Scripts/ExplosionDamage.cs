@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosionDamage : MonoBehaviour
@@ -8,16 +6,16 @@ public class ExplosionDamage : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.GetComponent<PlayerHealth>() != null)
+        PlayerHealth playerHealth = col.gameObject.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
         {
-            PlayerHealth playerHealth = col.gameObject.GetComponent<PlayerHealth>();
-            playerHealth.GetDamage(damage);
+            playerHealth.TakeDamage(damage);
         }
-        
-        if (col.gameObject.GetComponent<EnemyHealth>() != null)
+    
+        EnemyHealth enemyHealth = col.gameObject.GetComponent<EnemyHealth>();
+        if (enemyHealth != null)
         {
-            EnemyHealth enemyHealth = col.gameObject.GetComponent<EnemyHealth>();
-            enemyHealth.GetDamage(damage);
+            enemyHealth.TakeDamage(damage);
         }
     }
 }

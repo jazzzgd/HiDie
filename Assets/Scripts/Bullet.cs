@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -8,29 +5,31 @@ public class Bullet : MonoBehaviour
     public float damage;
     public float speed;
     private Rigidbody2D _rb;
-    
-    // Start is called before the first frame update
+
+    //Вызывается при создании пули, установки скорости, а после удаляет объект.
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null) 
+        {
+            _rb = GetComponent<Rigidbody2D>();
+        }
+        
         _rb.velocity = transform.right * speed;
         Destroy(gameObject, 3f);
     }
 
+    //Вызывается при столкновении пули с вражеским объектом, или бочкой, в конце метод дестрой удаляет пулю из сцены.
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.GetComponent<EnemyHealth>() != null)
+        if (col.gameObject.TryGetComponent(out EnemyHealth enemyHealth)) 
         {
-            EnemyHealth enemyHealth = col.gameObject.GetComponent<EnemyHealth>();
-            enemyHealth.GetDamage(damage);
-        }
-        
-        if (col.gameObject.GetComponent<BoomBarrelHealth>() != null)
+            enemyHealth.TakeDamage(damage);
+        } 
+        else if (col.gameObject.TryGetComponent(out BoomBarrelHealth barrelHealth)) 
         {
-            BoomBarrelHealth barrelHealth = col.gameObject.GetComponent<BoomBarrelHealth>();
             barrelHealth.GetDamage(damage);
         }
-        
+
         Destroy(gameObject);
     }
 }

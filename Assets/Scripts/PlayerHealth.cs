@@ -1,47 +1,47 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    public float currentHealth;
+    private float maxHealth = 100f;
+    private float currentHealth;
+    
     public Image fill;
 
-    // Start is called before the first frame update
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+        set { maxHealth = value; }
+    }
+
+    public float CurrentHealth
+    {
+        get { return currentHealth; }
+        set { currentHealth = value; }
+    }
+    
     void Start()
     {
-        currentHealth = maxHealth;
+        CurrentHealth = MaxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public void RestoreHealth(float healAmount)
     {
-        currentHealth += healAmount; // Increase the player's health by the specified amount
+        CurrentHealth += healAmount;
         UpdateHealthBar();
-        // Clamp the player's health to the maximum
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-
-        Debug.Log("Player restored " + healAmount + " health. Current health: " + currentHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+        Debug.Log($"Player restored {healAmount} health. Current health: {CurrentHealth}");
     }
     
-    public void GetDamage(float damageAmount)
+    public void TakeDamage(float damageAmount)
     {
-        currentHealth -= damageAmount;
+        CurrentHealth -= damageAmount;
         UpdateHealthBar();
         AudioManager.instance.PlaySFX(4);
-        //Если хп врага меньше или равно нулю, то вызывается функция Died.
-        if (currentHealth <= 0)
+
+        if (CurrentHealth <= 0)
         {
-            PlayerController.Instance.Died();//Активация анимации смерти игрока.
+            PlayerController.Instance.Died(); // Активация анимации смерти игрока.
         }
     }
 

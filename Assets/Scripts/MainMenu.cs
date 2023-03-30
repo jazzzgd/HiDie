@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +12,7 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.DeleteAll();
         }
     }
-
+    
     public void StartGame()
     {
         SceneManager.LoadScene(startScene);
