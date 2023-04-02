@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,10 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public int money;
     public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI timeText;
+
+    private float startTime;
+    private float score;
 
     //  Проверка существования экземпляра класса.
     private void Awake()
@@ -22,6 +27,7 @@ public class GameManager : MonoBehaviour
     //  Присваивание текущего количества денег.
     private void Start()
     {
+        startTime = Time.time;
         money = SaveManager.instance.activeSave.currentMoney;
     }
 
@@ -39,6 +45,9 @@ public class GameManager : MonoBehaviour
         }
         
         UpdateMoneyText();
+        
+        score = Time.time - startTime;
+        timeText.text = "Time: " + score.ToString("F");
     }
 
     public void PauseMenu()
